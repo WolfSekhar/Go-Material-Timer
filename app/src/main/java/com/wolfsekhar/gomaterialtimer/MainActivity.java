@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewTimer;
     private EditText editTextMins,editTextSecs;
     private Button buttonStart,buttonStop;
-    private long minutes =0, seconds = 0,milliseconds = 0;
+    private long milliseconds = 0,minutes = 0,seconds = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,43 +24,25 @@ public class MainActivity extends AppCompatActivity {
 
         getViewsIds();
 
-        editTextSecs.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!editTextSecs.getText().toString().isEmpty()){
-                    if ( Integer.parseInt(editTextSecs.getText().toString()) > 60){
-                        editTextSecs.setText(String.valueOf(60));
-                    }
-                }
-            }
-        });
-
         buttonStart.setOnClickListener(l -> {
-            try {
-                minutes = Long.parseLong(editTextMins.getText().toString()) ;
-                seconds = Long.parseLong(editTextSecs.getText().toString());
-            } catch (NumberFormatException ignored) {}
-            finally {
-                if (minutes != 0 && seconds != 0){
-                    countDownInitiate(convertToMillisecond(minutes,seconds));
-                }
+              if (editTextMins.getText().toString().isEmpty()){
+                  minutes =0;
+              }else {
+                  minutes = Long.parseLong( editTextMins.getText().toString());
+              }if (editTextSecs.getText().toString().isEmpty()){
+                      seconds = 0;
+                  }
+              else {
+                  seconds = Long.parseLong(editTextSecs.getText().toString());
             }
+                  countDownInitiate(convertToMillisecond(minutes,seconds));
         });
-
 
         buttonStop.setOnClickListener(l -> {
             timer.cancel();
             textViewTimer.setText("00:00");
+            editTextMins.setEnabled(true);
+            editTextSecs.setEnabled(true);
             clear();
         });
 
@@ -78,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void countDownInitiate(long totalTime){
+        editTextMins.setEnabled(false);
+        editTextSecs.setEnabled(false);
         timer = new CountDownTimer(totalTime,1000){
-
             @Override
             public void onTick(long millisUntilFinished) {
                 milliseconds = millisUntilFinished;
@@ -90,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 textViewTimer.setText("Times Up");
+                editTextMins.setEnabled(true);
+                editTextSecs.setEnabled(true);
             }
         }.start();
+
     }
 
     private long convertToMillisecond(long min,long sec ){
@@ -105,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void clear(){
         timer.cancel();
-        editTextMins.setText("");
-        editTextSecs.setText("");
+        editTextMins.setText("00");
+        editTextSecs.setText("00");
     }
 
 

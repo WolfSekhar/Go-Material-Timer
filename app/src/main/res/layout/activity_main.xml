@@ -41,10 +41,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:ems="3"
-            android:hint="MM"
+            android:hint="Mins"
             app:hintAnimationEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
+                android:ems="3"
                 android:fontFamily="@font/acme_regular"
                 android:inputType="number"
                 android:id="@+id/edittext_minutes"
@@ -68,11 +68,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:ems="2"
-            android:hint="SS"
+            android:hint="Sec"
             app:hintAnimationEnabled="true"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:ems="2"
                 android:fontFamily="@font/acme_regular"
                 android:inputType="number"
                 android:gravity="center"
